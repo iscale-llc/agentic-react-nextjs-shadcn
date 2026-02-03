@@ -1,0 +1,5 @@
+approveBuilds: esbuild
+
+ignoredBuiltDependencies:
+  - sharp
+  - unrs-resolver

@@ -47,6 +47,39 @@ export const agentBrowser = {
     )
   },
 
+  /** Run JS in page, return result */
+  evaluate: (js: string): string => {
+    return exec(`evaluate "${js.replace(/"/g, '\\"')}"`)
+  },
+
+  /** Snapshot filtered to interactive elements only */
+  snapshotInteractive: (): string => {
+    // agent-browser supports --interactive flag
+    try {
+      return exec("snapshot --interactive")
+    } catch {
+      // fallback: get full snapshot (caller can filter)
+      return exec("snapshot")
+    }
+  },
+
+  /** Press a keyboard key */
+  pressKey: (key: string) => {
+    exec(`press "${key}"`)
+  },
+
+  /** Get DOM info for a selector via JS evaluation */
+  getDomInfo: (selector: string): string => {
+    const js = `JSON.stringify((() => {
+      const el = document.querySelector('${selector.replace(/'/g, "\\'")}');
+      if (!el) return null;
+      const attrs = {};
+      for (const a of el.attributes) attrs[a.name] = a.value;
+      return { tag: el.tagName.toLowerCase(), role: el.getAttribute('role'), attrs };
+    })())`
+    return exec(`evaluate "${js.replace(/"/g, '\\"')}"`)
+  },
+
   /**
    * Returns hydration errors captured by HydrationSignal, or null if none.
    * Reads from `document.documentElement.dataset.hydrationErrors`.

@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { auth } from "@/lib/auth"
 import { redirect } from "next/navigation"
-import { LayoutDashboard, Users, LogOut } from "lucide-react"
+import { LayoutDashboard, Users, LogOut, BarChart3, Settings, Activity, Table2 } from "lucide-react"
 import { signOut } from "@/lib/auth"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
@@ -35,6 +35,34 @@ export default async function DashboardLayout({
           >
             <Users className="h-4 w-4" />
             Users
+          </Link>
+          <Link
+            href="/dashboard/analytics"
+            className="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium hover:bg-accent transition-colors"
+          >
+            <BarChart3 className="h-4 w-4" />
+            Analytics
+          </Link>
+          <Link
+            href="/dashboard/settings"
+            className="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium hover:bg-accent transition-colors"
+          >
+            <Settings className="h-4 w-4" />
+            Settings
+          </Link>
+          <Link
+            href="/dashboard/sheets"
+            className="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium hover:bg-accent transition-colors"
+          >
+            <Table2 className="h-4 w-4" />
+            Sheets
+          </Link>
+          <Link
+            href="/dashboard/activity"
+            className="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium hover:bg-accent transition-colors"
+          >
+            <Activity className="h-4 w-4" />
+            Activity Log
           </Link>
         </nav>
         <div className="mt-auto p-4">

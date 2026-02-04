@@ -1,5 +1,57 @@
 # Changelog
 
+## 0.2.0 — 2026-02-03
+
+Dual-layer test framework + new pages with accessibility traps.
+
+### Accessibility Traps (`NEXT_PUBLIC_TRAPS_ENABLED`)
+
+14 intentional a11y traps across Sheets and Settings pages. Each component renders a visually-identical but semantically broken version when traps are ON. Traps OFF renders the accessible version. Use traps to validate that your agent tests catch real issues — not just visual presence.
+
+| Trap | Component | Issue |
+|------|-----------|-------|
+| #22 | grid.tsx | No `role="grid"` / `row` / `gridcell` — div soup |
+| #23 | cell.tsx | Click-only cells, no keyboard, no `tabIndex` |
+| #24 | formula-bar.tsx | Unlabeled input, no `aria-describedby` |
+| #25 | cell-editor.tsx | No `role`, no `aria-readonly` toggle |
+| #26 | format-toolbar.tsx | Divs not buttons, color-only state, no `aria-pressed` |
+| #27 | column-resizer.tsx | Mouse-only, no `role="separator"`, no keyboard |
+| #28 | selection-info.tsx | No `role="status"`, no `aria-live` |
+| #29 | delete-account-dialogs.tsx | Two simultaneous `aria-modal="true"` |
+| — | save-button.tsx | Div styled as button |
+| — | notification-toggles.tsx | Div toggles, no `role="switch"` / `aria-checked` |
+| — | profile-section.tsx | Placeholder-only inputs, no `<label>` |
+| — | avatar-upload.tsx | Div as button, no keyboard |
+| — | theme-selector.tsx | Color swatches only, no `role="radio"` |
+| — | priority-reorder.tsx | Mouse-only drag, no keyboard alternative |
+
+### Dual-Layer Test Framework
+
+- `tests/e2e/helpers/semantic-assertions.ts` — 7 reusable assertion helpers + `dualLayerAssert` combiner
+- Each test checks BOTH visual presence AND semantic correctness
+- Traps ON: semantic layer fails, visual passes (proving visual-only tests are false positives)
+- Traps OFF: both layers pass
+
+### New Contract Tests
+
+- `sheets-a11y.test.ts` — 19 tests: grid roles, cell keyboard nav, formula bar, toolbar, resize, selection, live regions
+- `settings-a11y.test.ts` — 11 tests: save button, toggles, form labels, theme radios, reorder, avatar
+- `cross-page-a11y.test.ts` — 10 tests: nav links, landmarks, headings, sidebar, sign out
+
+### New Pages
+
+- **Sheets** — spreadsheet with formula engine (SUM/AVG), cell selection, edit mode, format toolbar, column resize
+- **Settings** — profile form, notification toggles, theme selector, priority reorder, avatar upload, delete account
+- **Analytics** — metric cards, revenue chart, tabbed views
+- **Activity Log** — filterable activity feed with pagination
+
+### agent-browser Helper Extensions
+
+- `evaluate(js)` — run JS in page
+- `snapshotInteractive()` — interactive-only snapshot
+- `pressKey(key)` — keyboard input
+- `getDomInfo(selector)` — DOM element inspection
+
 ## 0.1.1 — 2026-02-03
 
 Agent-friendliness improvements for reliable agent-browser testing.

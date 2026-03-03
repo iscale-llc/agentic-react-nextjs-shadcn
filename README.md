@@ -237,6 +237,12 @@ TEST_BASE_URL=http://localhost:3000 pnpm test:e2e
 
 This template uses **standard npm packages** — `next`, `react`, `radix-ui`, `tailwindcss`. Nothing is forked or monkey-patched. The agent-testability comes from application-level patterns (semantic HTML, ARIA contracts, test helpers), not framework modifications. Security patches to Next.js, React, or any dependency work via normal `pnpm update`.
 
+## Built with AI
+
+This project is part of the [Built with AI](https://builtwithai.com/open-source) open source collection — free tools built by the AI builder community. An agent-testable SaaS template designed for AI-driven development and testing workflows.
+
+**[Join the community →](https://builtwithai.com/apply)**
+
 ## License
 
 MIT
